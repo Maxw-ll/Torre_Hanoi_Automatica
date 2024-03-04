@@ -22,7 +22,8 @@ typedef struct tower
     int currentTAM;
 } Tower;
 
-typedef struct Tower_Node{
+typedef struct Tower_Node
+{
     Tower t;
     struct Tower_Node *left;
     struct Tower_Node *right;
@@ -38,7 +39,6 @@ Tower createTower(int size)
     t.currentTAM = 0;
     return t;
 }
-
 
 // Enche uma Torre com Todos os Discos
 void fullfillDisk(Tower *t)
@@ -59,6 +59,7 @@ void clean_towers(Tower *towers)
         for (int i = 0; i < towers[0].tam; i++)
         {
             towers[j].discos[i].id = 0;
+            towers[j].currentTAM = 0;
         }
     }
 }
@@ -160,98 +161,158 @@ int verifica_win(Tower t)
     return FALSE;
 }
 
-
 int resolve_recursivo(Tower *t, int act_tower, int next_tower, int movemnts)
-{   
-    if(verifica_win(t[2]) == TRUE){
+{
+    if (verifica_win(t[2]) == TRUE)
+    {
         return movemnts;
     }
 
-    int can_move = moveDisk(&t[act_tower], &t[next_tower]); 
-   
+    int can_move = moveDisk(&t[act_tower], &t[next_tower]);
 
-    if(can_move == TRUE){
+    if (can_move == TRUE)
+    {
         system("cls");
         printGame(t);
         Sleep(50);
         movemnts++;
-        if(act_tower == 0 && next_tower == 1){
+        if (act_tower == 0 && next_tower == 1)
+        {
             next_tower++;
             return resolve_recursivo(t, act_tower, next_tower, movemnts);
         }
-        if(act_tower == 0 && next_tower == 2){
+        if (act_tower == 0 && next_tower == 2)
+        {
             next_tower--;
             return resolve_recursivo(t, act_tower, next_tower, movemnts);
         }
-        if(act_tower == 1 && next_tower == 2){
-            next_tower-=2;
+        if (act_tower == 1 && next_tower == 2)
+        {
+            next_tower -= 2;
             return resolve_recursivo(t, act_tower, next_tower, movemnts);
         }
-        if(act_tower == 1 && next_tower == 0){
-            next_tower+=2;
+        if (act_tower == 1 && next_tower == 0)
+        {
+            next_tower += 2;
             return resolve_recursivo(t, act_tower, next_tower, movemnts);
         }
-        if(act_tower == 2 && next_tower == 0){
+        if (act_tower == 2 && next_tower == 0)
+        {
             next_tower++;
             return resolve_recursivo(t, act_tower, next_tower, movemnts);
         }
-        if(act_tower == 2 && next_tower == 1){
+        if (act_tower == 2 && next_tower == 1)
+        {
             next_tower--;
             return resolve_recursivo(t, act_tower, next_tower, movemnts);
         }
-    } else{
-        if(t[0].tam%2 == 0){
-            if(act_tower == 0 && next_tower == 1){
-                act_tower+=2;
-                return resolve_recursivo(t, next_tower, act_tower, movemnts);
-            }
-            if(act_tower == 0 && next_tower == 2){
-                return resolve_recursivo(t, next_tower, act_tower, movemnts);
-            }
-            if(act_tower == 1 && next_tower == 2){
-                act_tower--;
-                return resolve_recursivo(t, next_tower, act_tower, movemnts);
-            }
-            if(act_tower == 1 && next_tower == 0){
-                return resolve_recursivo(t, next_tower, act_tower, movemnts);
-            }
-            if(act_tower == 2 && next_tower == 0){  
-                act_tower--;
-                return resolve_recursivo(t, next_tower, act_tower, movemnts);
-            }
-            if(act_tower == 2 && next_tower == 1){
-                return resolve_recursivo(t, next_tower, act_tower, movemnts);
-            }
-        } else{
-            if(act_tower == 0 && next_tower == 1){
-                return resolve_recursivo(t, next_tower, act_tower, movemnts);
-            }
-            if(act_tower == 0 && next_tower == 2){
-                act_tower++;
-                return resolve_recursivo(t, next_tower, act_tower, movemnts);
-            }
-            if(act_tower == 1 && next_tower == 2){
-                return resolve_recursivo(t, next_tower, act_tower, movemnts);
-            }
-            if(act_tower == 1 && next_tower == 0){
-                act_tower++;
-                return resolve_recursivo(t, next_tower, act_tower, movemnts);
-            }
-            if(act_tower == 2 && next_tower == 0){  
-                return resolve_recursivo(t, next_tower, act_tower, movemnts);
-            }
-            if(act_tower == 2 && next_tower == 1){
-                act_tower-=2;
-                return resolve_recursivo(t, next_tower, act_tower, movemnts);
-            }
-
-        }
-
-
     }
-        
-   
-    
+    else
+    {
+        if (t[0].tam % 2 == 0)
+        {
+            if (act_tower == 0 && next_tower == 1)
+            {
+                act_tower += 2;
+                return resolve_recursivo(t, next_tower, act_tower, movemnts);
+            }
+            if (act_tower == 0 && next_tower == 2)
+            {
+                return resolve_recursivo(t, next_tower, act_tower, movemnts);
+            }
+            if (act_tower == 1 && next_tower == 2)
+            {
+                act_tower--;
+                return resolve_recursivo(t, next_tower, act_tower, movemnts);
+            }
+            if (act_tower == 1 && next_tower == 0)
+            {
+                return resolve_recursivo(t, next_tower, act_tower, movemnts);
+            }
+            if (act_tower == 2 && next_tower == 0)
+            {
+                act_tower--;
+                return resolve_recursivo(t, next_tower, act_tower, movemnts);
+            }
+            if (act_tower == 2 && next_tower == 1)
+            {
+                return resolve_recursivo(t, next_tower, act_tower, movemnts);
+            }
+        }
+        else
+        {
+            if (act_tower == 0 && next_tower == 1)
+            {
+                return resolve_recursivo(t, next_tower, act_tower, movemnts);
+            }
+            if (act_tower == 0 && next_tower == 2)
+            {
+                act_tower++;
+                return resolve_recursivo(t, next_tower, act_tower, movemnts);
+            }
+            if (act_tower == 1 && next_tower == 2)
+            {
+                return resolve_recursivo(t, next_tower, act_tower, movemnts);
+            }
+            if (act_tower == 1 && next_tower == 0)
+            {
+                act_tower++;
+                return resolve_recursivo(t, next_tower, act_tower, movemnts);
+            }
+            if (act_tower == 2 && next_tower == 0)
+            {
+                return resolve_recursivo(t, next_tower, act_tower, movemnts);
+            }
+            if (act_tower == 2 && next_tower == 1)
+            {
+                act_tower -= 2;
+                return resolve_recursivo(t, next_tower, act_tower, movemnts);
+            }
+        }
+    }
+}
+
+void resolver_sozinho(Tower *towers, int quantidade_movimentos)
+{   
+    system("cls");
+    quantidade_movimentos=0;
+    int towerOut, towerIn;
+    int qtd_discos = towers[0].tam;
+    while (TRUE)
+    {
+        printGame(towers);
+        printf("Coeh, meu mano, move os discos da torre aih!\n");
+        printf("Escolha a Torre de Saihda: ");
+        scanf("%d", &towerOut);
+        printf("Escolha a Torre de Entrada: ");
+        scanf("%d", &towerIn);
+        system("cls");
+        int movement_validation = moveDisk(&towers[towerOut], &towers[towerIn]);
+
+        int win_ = verifica_win(towers[QTD_TORRE - 1]);
+
+        if (movement_validation == FALSE)
+        {
+            printf("Movimento Invalido meu dog\n");
+        }
+        else
+        {
+            quantidade_movimentos++;
+        }
+
+        if (win_ == TRUE)
+        {
+            if (quantidade_movimentos == (int)pow(2, qtd_discos) - 1)
+            {
+                printf("Parabens, vc resolveu a torre de hanoi de %d Discos com %d movimentos! Quantidade de movimentos PERFEITA!\n", qtd_discos, quantidade_movimentos);
+            }
+            else
+            {
+                printf("Parabens, vc resolveu a torre de hanoi de %d Discos com %d movimentos! Mas ainda da pra resolver com menos movimentos, vc consegue?\n", qtd_discos, quantidade_movimentos);
+            }
+            break;
+        }
+    }
 }
 
 void gamePlay(void)
@@ -259,10 +320,10 @@ void gamePlay(void)
     // Let's play
     // Função que inicia o jogo
 
-    int towerOut, towerIn;
     int qtd_discos;
+    int forma_de_resolver;
 
-    printf("Hello, quer tentar a torre de Hanoi com quantos discos? \n");
+    printf("Hello, quer tentar a torre de Hanoi com quantos discos? ");
     scanf("%d", &qtd_discos);
 
     Tower towers[QTD_TORRE];
@@ -273,53 +334,59 @@ void gamePlay(void)
     clean_towers(towers);
     fullfillDisk(&towers[0]);
     int quant_movements = 0;
-    printGame(towers);
-   
+    int run = TRUE;
+    while (run == TRUE)
+    {   
+        clean_towers(towers);
+        fullfillDisk(&towers[0]);
+        quant_movements = 0;
+        printf("----------- MENU ----------------\n");
+        printf("[0] - Resolver Sozinho\n");
+        printf("[1] - Observar o Algoritmo Resolvendo\n");
+        printf("[2] - Sair\n");
 
-    if(qtd_discos%2 == 0){
-        quant_movements = resolve_recursivo(towers, 0, 1, quant_movements);
-    } else{
-        quant_movements = resolve_recursivo(towers, 0, 2, quant_movements);
+        scanf("%d", &forma_de_resolver);
+
+        switch (forma_de_resolver)
+        {
+        case 0:
+        {
+            resolver_sozinho(towers, quant_movements);
+        }
+        break;
+        case 1:
+        {
+            if (qtd_discos % 2 == 0)
+            {
+                quant_movements = resolve_recursivo(towers, 0, 1, quant_movements);
+            }
+            else
+            {
+                quant_movements = resolve_recursivo(towers, 0, 2, quant_movements);
+            }
+            if (quant_movements == (int)pow(2, qtd_discos) - 1)
+            {
+                printf("Parabens, vc resolveu a torre de hanoi de %d Discos com %d movimentos! Quantidade de movimentos PERFEITA!\n", qtd_discos, quant_movements);
+            }
+            else
+            {
+                printf("Parabens, vc resolveu a torre de hanoi de %d Discos com %d movimentos! Mas ainda da pra resolver com menos movimentos, vc consegue?\n", qtd_discos, quant_movements);
+            }
+        }
+        break;
+        case 2:
+        {
+            run = FALSE;
+        }
+        break;
+
+        default:
+            printf("Opcao Inválida");
+        }
     }
-    if(quant_movements == (int)pow(2, qtd_discos)-1){
-        printf("Parabens, vc resolveu a torre de hanoi de %d Discos com %d movimentos! Quantidade de movimentos PERFEITA!\n", qtd_discos, quant_movements);
-    }
-    else{
-        printf("Parabens, vc resolveu a torre de hanoi de %d Discos com %d movimentos! Mas ainda da pra resolver com menos movimentos, vc consegue?\n", qtd_discos, quant_movements);
-    }
-
-    //   while (TRUE){
-    //     printGame(towers);
-    //     printf("Coeh, meu mano, move os discos da torre aih!\n");
-    //     printf("Escolha a Torre de Saihda: ");
-    //     scanf("%d", &towerOut);
-    //     printf("Escolha a Torre de Entrada: ");
-    //     scanf("%d", &towerIn);
-    //     system("cls");
-    //     int movement_validation = moveDisk(&towers[towerOut], &towers[towerIn]);
-
-    //     quantidade_movimentos++;
-
-    //     int win_ = verifica_win(towers[QTD_TORRE-1]);
-
-    //     if(movement_validation == FALSE){
-    //       printf("Movimento Invalido meu dog\n");
-    //     }
-
-    //     if(win_ == TRUE){
-    //       if(quantidade_movimentos == (int)pow(2, qtd_discos)-1){
-    //         printf("Parabens, vc resolveu a torre de hanoi de %d Discos com %d movimentos! Quantidade de movimentos PERFEITA!\n", qtd_discos, quantidade_movimentos);
-    //       }
-    //       else{
-    //         printf("Parabens, vc resolveu a torre de hanoi de %d Discos com %d movimentos! Mas ainda da pra resolver com menos movimentos, vc consegue?\n", qtd_discos, quantidade_movimentos);
-    //       }
-    //       break;
-    //     }
-    //   }
 }
 
 int main(void)
 {
     gamePlay();
-    system("pause");
 }
