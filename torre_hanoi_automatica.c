@@ -375,7 +375,7 @@ void gamePlay(void)
             time = clock() - time;
             int int_segundos = ((int)time)/(CLOCKS_PER_SEC);
             float frac_segundos = (((float)time)/(CLOCKS_PER_SEC)-((int)time)/(CLOCKS_PER_SEC))*1000;
-            transforma_tempo(int_segundos, &tempo[0]);
+            transforma_tempo(int_segundos, tempo);
             printf("Vc resolveu em: %d Horas, %d Minutos, %d Segundos e %.0f Milesimos de segundos\n",tempo[0], tempo[1], tempo[2], frac_segundos);
         }
         break;
@@ -398,11 +398,11 @@ void gamePlay(void)
 
             if (quant_movements == (int)pow(2, qtd_discos) - 1)
             {
-                printf("Parabens, vc resolveu a torre de hanoi de %d Discos com %d movimentos! Quantidade de movimentos PERFEITA!\n", qtd_discos, quant_movements);
+                printf("O Algoritmo resolveu a torre de hanoi de %d Discos com %d movimentos! Quantidade de movimentos PERFEITA!\n", qtd_discos, quant_movements);
             }
             else
             {
-                printf("Parabens, vc resolveu a torre de hanoi de %d Discos com %d movimentos! Mas ainda da pra resolver com menos movimentos, vc consegue?\n", qtd_discos, quant_movements);
+                printf("O Algoritmo resolveu a torre de hanoi de %d Discos com %d movimentos! Mas ainda da pra resolver com menos movimentos, ele consegue?\n", qtd_discos, quant_movements);
             }
 
             printf("O Algoritmo resolveu em: %d Horas, %d Minutos, %d Segundos e %.0f Milesimos de segundos\n",tempo[0], tempo[1], tempo[2], frac_segundos);
