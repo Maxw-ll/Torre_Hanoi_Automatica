@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <windows.h>
+#include <time.h>
 
 #define TRUE 1
 #define FALSE 0
@@ -293,7 +294,7 @@ void resolver_sozinho(Tower *towers, int quantidade_movimentos)
 
         if (movement_validation == FALSE)
         {
-            printf("Movimento Invalido meu dog\n");
+            printf("Movimento Invalido\n");
         }
         else
         {
@@ -315,6 +316,17 @@ void resolver_sozinho(Tower *towers, int quantidade_movimentos)
     }
 }
 
+void transforma_tempo(int segundos, int *tempo){
+    int hora = segundos/3600;
+    int minutos = (segundos%3600)/60;
+    int seconds = ((segundos%3600)%60);
+    tempo[0] = hora;
+    tempo[1] = minutos;
+    tempo[2] = seconds;
+
+    return;
+}
+
 void gamePlay(void)
 {
     // Let's play
@@ -333,10 +345,16 @@ void gamePlay(void)
     }
     clean_towers(towers);
     fullfillDisk(&towers[0]);
+    int tempo[3] = {};
     int quant_movements = 0;
     int run = TRUE;
+    clock_t time;
     while (run == TRUE)
     {   
+        //Zera o vetor de tempo
+        for(int i=0; i<3; i++){
+            tempo[i] = 0;
+        }
         clean_towers(towers);
         fullfillDisk(&towers[0]);
         quant_movements = 0;
@@ -347,15 +365,23 @@ void gamePlay(void)
 
         scanf("%d", &forma_de_resolver);
 
+
         switch (forma_de_resolver)
         {
         case 0:
-        {
+        {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+            time = clock();
             resolver_sozinho(towers, quant_movements);
+            time = clock() - time;
+            int int_segundos = ((int)time)/(CLOCKS_PER_SEC);
+            float frac_segundos = ((float)time)/(CLOCKS_PER_SEC)-((int)time)/(CLOCKS_PER_SEC);
+            transforma_tempo(int_segundos, &tempo[0]);
+            printf("Vc resolveu em: %d Horas, %d Minutos, %d Segundos e %.3f Milesimos de segundos\n",tempo[0], tempo[1], tempo[2], frac_segundos);
         }
         break;
         case 1:
-        {
+        {   
+            time = clock();
             if (qtd_discos % 2 == 0)
             {
                 quant_movements = resolve_recursivo(towers, 0, 1, quant_movements);
@@ -364,6 +390,12 @@ void gamePlay(void)
             {
                 quant_movements = resolve_recursivo(towers, 0, 2, quant_movements);
             }
+
+            time = clock() - time;
+            int int_segundos = ((int)time)/(CLOCKS_PER_SEC);
+            float frac_segundos = ((float)time)/(CLOCKS_PER_SEC)-((int)time)/(CLOCKS_PER_SEC);
+            transforma_tempo(int_segundos, tempo);
+
             if (quant_movements == (int)pow(2, qtd_discos) - 1)
             {
                 printf("Parabens, vc resolveu a torre de hanoi de %d Discos com %d movimentos! Quantidade de movimentos PERFEITA!\n", qtd_discos, quant_movements);
@@ -372,6 +404,8 @@ void gamePlay(void)
             {
                 printf("Parabens, vc resolveu a torre de hanoi de %d Discos com %d movimentos! Mas ainda da pra resolver com menos movimentos, vc consegue?\n", qtd_discos, quant_movements);
             }
+
+            printf("O Algoritmo resolveu em: %d Horas, %d Minutos, %d Segundos e %.3f Milesimos de segundos\n",tempo[0], tempo[1], tempo[2], frac_segundos);
         }
         break;
         case 2:
