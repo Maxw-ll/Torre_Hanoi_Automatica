@@ -262,7 +262,7 @@ void gamePlay(void)
     int towerOut, towerIn;
     int qtd_discos;
 
-    printf("Fala meu dog, quer tentar a torre de Hanoi com quantos discos? \n");
+    printf("Hello, quer tentar a torre de Hanoi com quantos discos? \n");
     scanf("%d", &qtd_discos);
 
     Tower towers[QTD_TORRE];
