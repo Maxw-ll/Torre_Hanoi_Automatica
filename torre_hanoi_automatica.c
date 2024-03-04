@@ -374,9 +374,9 @@ void gamePlay(void)
             resolver_sozinho(towers, quant_movements);
             time = clock() - time;
             int int_segundos = ((int)time)/(CLOCKS_PER_SEC);
-            float frac_segundos = ((float)time)/(CLOCKS_PER_SEC)-((int)time)/(CLOCKS_PER_SEC);
+            float frac_segundos = (((float)time)/(CLOCKS_PER_SEC)-((int)time)/(CLOCKS_PER_SEC))*1000;
             transforma_tempo(int_segundos, &tempo[0]);
-            printf("Vc resolveu em: %d Horas, %d Minutos, %d Segundos e %.3f Milesimos de segundos\n",tempo[0], tempo[1], tempo[2], frac_segundos);
+            printf("Vc resolveu em: %d Horas, %d Minutos, %d Segundos e %.0f Milesimos de segundos\n",tempo[0], tempo[1], tempo[2], frac_segundos);
         }
         break;
         case 1:
@@ -393,7 +393,7 @@ void gamePlay(void)
 
             time = clock() - time;
             int int_segundos = ((int)time)/(CLOCKS_PER_SEC);
-            float frac_segundos = ((float)time)/(CLOCKS_PER_SEC)-((int)time)/(CLOCKS_PER_SEC);
+            float frac_segundos = (((float)time)/(CLOCKS_PER_SEC)-((int)time)/(CLOCKS_PER_SEC))*1000;
             transforma_tempo(int_segundos, tempo);
 
             if (quant_movements == (int)pow(2, qtd_discos) - 1)
@@ -405,7 +405,7 @@ void gamePlay(void)
                 printf("Parabens, vc resolveu a torre de hanoi de %d Discos com %d movimentos! Mas ainda da pra resolver com menos movimentos, vc consegue?\n", qtd_discos, quant_movements);
             }
 
-            printf("O Algoritmo resolveu em: %d Horas, %d Minutos, %d Segundos e %.3f Milesimos de segundos\n",tempo[0], tempo[1], tempo[2], frac_segundos);
+            printf("O Algoritmo resolveu em: %d Horas, %d Minutos, %d Segundos e %.0f Milesimos de segundos\n",tempo[0], tempo[1], tempo[2], frac_segundos);
         }
         break;
         case 2:
